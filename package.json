@@ -1,0 +1,28 @@
+{
+  "name": "entity-serializer",
+  "version": "1.0.0",
+  "description": "Serialize and deserialize all javascript data types",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deflexable/entity-serializer.git"
+  },
+  "keywords": [
+    "serialize",
+    "deserialize",
+    "data-types"
+  ],
+  "author": "Anthony Onabanjo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/deflexable/entity-serializer/issues"
+  },
+  "homepage": "https://github.com/deflexable/entity-serializer#readme",
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "segment-binary": "^1.0.1"
+  }
+}
