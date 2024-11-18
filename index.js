@@ -49,7 +49,7 @@ const DataTypesAccessor = [
         name: 'ARRAY',
         isInstance: o => Array.isArray(o),
         encode: o => Buffer.concat(o.map(v => segmentBinary(serializeCore(v)))),
-        decode: o => desegmentBinary(o).blocks.map(v => deserializeCore(v))
+        decode: o => o.length ? desegmentBinary(o).blocks.map(v => deserializeCore(v)) : []
     },
     {
         name: 'OBJECT',
@@ -62,11 +62,11 @@ const DataTypesAccessor = [
                 ])
             )
         )),
-        decode: o => Object.fromEntries(
+        decode: o => o.length ? Object.fromEntries(
             desegmentBinary(o).blocks.map(v =>
                 desegmentBinary(v).blocks.map((v, i) => i ? deserializeCore(v) : v.toString('utf8'))
             )
-        )
+        ) : {}
     },
     {
         name: 'DATE',
@@ -145,9 +145,10 @@ const DataTypesAccessor = [
         decode: o => {
             const map = new Map();
 
-            desegmentBinary(o).blocks.forEach(v => {
-                map.set(...desegmentBinary(v).blocks.map(v => deserializeCore(v)));
-            });
+            if (o = desegmentBinary(o))
+                o.blocks.forEach(v => {
+                    map.set(...desegmentBinary(v).blocks.map(v => deserializeCore(v)));
+                });
             return map;
         }
     },
@@ -162,9 +163,10 @@ const DataTypesAccessor = [
         decode: o => {
             const map = new Set();
 
-            desegmentBinary(o).blocks.forEach(v => {
-                map.add(deserializeCore(v));
-            });
+            if (o = desegmentBinary(o))
+                o.blocks.forEach(v => {
+                    map.add(deserializeCore(v));
+                });
             return map;
         }
     },
@@ -393,6 +395,8 @@ const serialize = (obj) => {
 }
 
 const deserialize = (buf) => {
+    if ([Uint8Array, ArrayBuffer].some(v => buf instanceof v)) buf = Buffer.from(buf);
+
     const obj = deserializeCore(buf);
     leaveCircularReference(obj, [], obj);
     return obj;

@@ -8,8 +8,7 @@ const data = {
     },
     buffer_test: Buffer.from('Donald Trump', 'utf8'),
     field_3: { g: { path: { url: 'example.com' } } },
-    mappers: new Map([[{ accessor: 'testing' }, true]]),
-    sets: new Set([1, 2, 3])
+    mappers: new Map([[{ accessor: 'testing' }, true]])
 };
 
 data.field_3.circular_test = new Map([[data.field_3, 'circular_mapper']]);

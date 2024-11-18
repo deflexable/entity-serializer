@@ -1,6 +1,6 @@
 {
   "name": "entity-serializer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Serialize and deserialize all javascript data types",
   "main": "index.js",
   "scripts": {
@@ -23,6 +23,6 @@
   "homepage": "https://github.com/deflexable/entity-serializer#readme",
   "dependencies": {
     "buffer": "^6.0.3",
-    "segment-binary": "^1.0.1"
+    "segment-binary": "^1.0.2"
   }
 }
