@@ -196,6 +196,19 @@ const DataTypesAccessor = [
         }
     },
     {
+        name: 'JSONable',
+        isInstance: o => {
+            try {
+                o.toJSON();
+                return true
+            } catch (_) {
+                return false;
+            }
+        },
+        encode: o => Buffer.from(JSON.stringify(o.toJSON()), 'utf8'),
+        decode: o => JSON.parse(o.toString('utf8'))
+    },
+    {
         name: 'ForeignArray',
         isInstance: o => o instanceof Array && o?.constructor?.name !== 'Array',
         encode: o => Buffer.from(JSON.stringify({ value: Array.from(o), name: o.constructor.name }), 'utf8'),
