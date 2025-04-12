@@ -419,7 +419,7 @@ const serializeCore = (obj) => {
     const { name, encode } = DataTypesAccessor.find(v => v.isInstance(obj));
     const encodedBuf = encode(obj);
 
-    if (!Buffer.isBuffer(encodedBuf)) throw '';
+    if (!Buffer.isBuffer(encodedBuf)) throw 'expected a buffer for serializeCore() first argument';
 
     return Buffer.concat([
         segmentBinary(Buffer.from(name, 'utf8')),
@@ -429,7 +429,7 @@ const serializeCore = (obj) => {
 
 const deserializeCore = (buf) => {
     const [name, data] = desegmentBinary(buf).blocks.map((v, i) => i ? v : v.toString('utf8'));
-    const { decode } = DataTypesAccessor.find(v => v.name === name)
+    const { decode } = DataTypesAccessor.find(v => v.name === name);
     return decode(data);
 }
 
